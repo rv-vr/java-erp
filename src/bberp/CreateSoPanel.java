@@ -189,7 +189,8 @@ class CreateSoPanel extends JPanel {
         CustomerModel c = (CustomerModel) customer.getSelectedItem();
         SalesOrderModel order = new SalesOrderModel();
         order.setOrderNo(soNumber.getText());
-        order.setOrderDate(ordered);        if (c != null) {
+        order.setOrderDate(ordered);
+        if (c != null) {
             order.setCustomerId(c.getId());
             order.setCustomerName(c.getName());
             order.setCustomerCreditLimit(c.getCreditLimit());
@@ -204,13 +205,12 @@ class CreateSoPanel extends JPanel {
         lines.forEach(order::addLine);
 
         try {
-            SalesOrderService.Result r = service.create(order);
-            String message = r.order.getOrderNo() + " saved as " + r.order.getStatus() + ".\n"
-                    + "Total: " + App.money(r.order.getTotalAmount()) + "\n"
-                    + "Exposure: " + App.money(r.exposure) + " of " + App.money(r.creditLimit) + " limit\n"
-                    + (r.backorderTotal > 0 ? "Backordered: " + r.backorderTotal + " unit(s)" : "Fully allocated");
-            if (r.order.getHoldReason() != null) message += "\n\n" + r.order.getHoldReason();
-            JOptionPane.showMessageDialog(this, message, "Sales Order", JOptionPane.INFORMATION_MESSAGE);
+            SalesOrderModel saved = service.create(order);
+            JOptionPane.showMessageDialog(this,
+                    saved.getOrderNo() + " saved as Draft.\n"
+                    + "Total: " + App.money(saved.getTotalAmount()) + "\n\n"
+                    + "Submit it from the Sales Orders list to run the credit and stock checks.",
+                    "Sales Order", JOptionPane.INFORMATION_MESSAGE);
             app.go(new SalesOrderListPanel(app, app.ds()));
         } catch (IllegalArgumentException | IllegalStateException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Cannot Save",

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class SalesOrderModel {
     public static final String DRAFT = "Draft";
+    public static final String PENDING_APPROVAL = "Pending Approval";
     public static final String CREDIT_HOLD = "Credit Hold";
     public static final String CONFIRMED = "Confirmed";
     public static final String CLOSED = "Closed";

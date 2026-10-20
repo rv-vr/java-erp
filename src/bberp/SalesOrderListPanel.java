@@ -18,6 +18,11 @@ class SalesOrderListPanel extends JPanel {
     private final OrderTableModel model = new OrderTableModel();
     private final JTable table = new JTable(model);
     private final JLabel count = App.label("", 11);
+    private final JButton submitBtn = App.button("Submit", App.GREEN, Color.WHITE);
+    private final JButton confirmBtn = App.button("Confirm", App.GREEN, Color.WHITE);
+    private final JButton closeBtn = App.button("Close Order", App.FIELD, Color.BLACK);
+    private final JButton deleteBtn = App.button("Delete", App.FIELD, Color.BLACK);
+    private final JButton viewBtn = App.button("View", App.FIELD, Color.BLACK);
 
     SalesOrderListPanel(App app, HikariDataSource ds) {
         super(new BorderLayout());
@@ -32,31 +37,43 @@ class SalesOrderListPanel extends JPanel {
                 if (e.getClickCount() == 2 && table.getSelectedRow() >= 0) showDetails();
             }
         });
+        table.getSelectionModel().addListSelectionListener(e -> updateButtons());
+
+        submitBtn.addActionListener(e -> act("Submit"));
+        confirmBtn.addActionListener(e -> act("Confirm"));
+        closeBtn.addActionListener(e -> act("Close"));
+        deleteBtn.addActionListener(e -> act("Delete"));
+        viewBtn.addActionListener(e -> showDetails());
 
         JButton back = App.button("Back", App.FIELD, Color.BLACK);
         back.addActionListener(e -> app.go(new MenuPanel(app, ds)));
         JButton refresh = App.button("Refresh", App.FIELD, Color.BLACK);
         refresh.addActionListener(e -> refresh());
-        JButton view = App.button("View", App.FIELD, Color.BLACK);
-        view.addActionListener(e -> showDetails());
         JButton create = App.button("+ Create SO", App.GREEN, Color.WHITE);
         create.addActionListener(e -> app.go(new CreateSoPanel(app, ds)));
 
-        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
-        buttons.setBackground(Color.WHITE);
-        buttons.add(count);
-        buttons.add(back);
-        buttons.add(refresh);
-        buttons.add(view);
-        buttons.add(create);
+        JPanel topButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
+        topButtons.setBackground(Color.WHITE);
+        topButtons.add(back);
+        topButtons.add(refresh);
+        topButtons.add(create);
+
+        JPanel workflow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        workflow.setBackground(Color.WHITE);
+        for (JButton b : new JButton[]{submitBtn, confirmBtn, closeBtn, viewBtn, deleteBtn}) {
+            workflow.add(b);
+        }
+        workflow.add(count);
+
+        JPanel top = new JPanel(new BorderLayout(0, 8));
+        top.setBackground(Color.WHITE);
+        top.add(App.label("Sales Orders", 18), BorderLayout.WEST);
+        top.add(topButtons, BorderLayout.EAST);
+        top.add(workflow, BorderLayout.SOUTH);
 
         JPanel content = new JPanel(new BorderLayout(0, 12));
         content.setBackground(Color.WHITE);
         content.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
-        JPanel top = new JPanel(new BorderLayout());
-        top.setBackground(Color.WHITE);
-        top.add(App.label("Sales Orders", 18), BorderLayout.WEST);
-        top.add(buttons, BorderLayout.EAST);
         content.add(top, BorderLayout.NORTH);
         content.add(new JScrollPane(table), BorderLayout.CENTER);
 
@@ -70,14 +87,87 @@ class SalesOrderListPanel extends JPanel {
         List<SalesOrderModel> orders = service.list();
         model.setOrders(orders);
         count.setText(orders.size() + " order(s)");
+        updateButtons();
+    }
+
+    private SalesOrderModel selected() {
+        int row = table.getSelectedRow();
+        return row < 0 ? null : model.orderAt(table.convertRowIndexToModel(row));
+    }
+
+    private void updateButtons() {
+        SalesOrderModel o = selected();
+        String status = o == null ? "" : o.getStatus();
+        submitBtn.setEnabled(SalesOrderModel.DRAFT.equals(status));
+        confirmBtn.setEnabled(SalesOrderModel.PENDING_APPROVAL.equals(status)
+                || SalesOrderModel.CREDIT_HOLD.equals(status));
+        closeBtn.setEnabled(SalesOrderModel.CONFIRMED.equals(status));
+        deleteBtn.setEnabled(!status.isEmpty() && !SalesOrderModel.CONFIRMED.equals(status)
+                && !SalesOrderModel.CLOSED.equals(status));
+    }
+
+    private void act(String action) {
+        SalesOrderModel o = selected();
+        if (o == null) {
+            info("Select an order first.");
+            return;
+        }
+        try {
+            switch (action) {
+                case "Submit":
+                    service.submit(o.getId());
+                    info("Order " + o.getOrderNo() + " submitted for approval.");
+                    break;
+                case "Confirm":
+                    if (SalesOrderModel.CREDIT_HOLD.equals(o.getStatus())
+                            && JOptionPane.showConfirmDialog(this,
+                                "Override the credit hold and confirm " + o.getOrderNo() + "?",
+                                "Credit Override", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                    SalesOrderService.Result r = service.confirm(o.getId());
+                    String message = o.getOrderNo() + " is now " + r.order.getStatus() + ".\n"
+                            + "Exposure: " + App.money(r.exposure) + " of " + App.money(r.creditLimit) + " limit"
+                            + (r.backorderTotal > 0
+                                ? "\nBackordered: " + r.backorderTotal + " unit(s)" : "\nFully allocated");
+                    if (r.order.getHoldReason() != null) message += "\n" + r.order.getHoldReason();
+                    info(message);
+                    break;
+                case "Close":
+                    if (JOptionPane.showConfirmDialog(this, "Close " + o.getOrderNo() + "? This is final.",
+                            "Close Order", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                    service.close(o.getId());
+                    info("Order " + o.getOrderNo() + " closed.");
+                    break;
+                case "Delete":
+                    if (JOptionPane.showConfirmDialog(this, "Delete " + o.getOrderNo() + "?",
+                            "Delete Order", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                    service.delete(o.getId());
+                    info("Order " + o.getOrderNo() + " deleted.");
+                    break;
+                default:
+                    return;
+            }
+            refresh();
+        } catch (IllegalArgumentException | IllegalStateException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Not Allowed",
+                    JOptionPane.WARNING_MESSAGE);
+            refresh();
+        }
+    }
+
+    private void info(String message) {
+        JOptionPane.showMessageDialog(this, message, "Sales Order", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void showDetails() {
-        int row = table.getSelectedRow();
-        SalesOrderModel selected = row < 0 ? null : model.orderAt(table.convertRowIndexToModel(row));
+        SalesOrderModel selected = selected();
         if (selected == null) {
-            JOptionPane.showMessageDialog(this, "Select an order first.", "No Selection",
-                    JOptionPane.INFORMATION_MESSAGE);
+            info("Select an order first.");
             return;
         }
         SalesOrderModel o = service.find(selected.getId());
@@ -99,7 +189,7 @@ class SalesOrderListPanel extends JPanel {
           .append("Instr.     : ").append(nz(o.getDeliveryInstructions())).append('\n')
           .append("Status     : ").append(o.getStatus()).append('\n');
         if (o.getHoldReason() != null) {
-            sb.append("Hold       : ").append(o.getHoldReason()).append('\n');
+            sb.append("Note       : ").append(o.getHoldReason()).append('\n');
         }
         sb.append("\n")
           .append(String.format("%-14s %-28s %5s %5s %12s %10s%n",

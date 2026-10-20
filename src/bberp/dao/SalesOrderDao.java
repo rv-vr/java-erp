@@ -17,7 +17,7 @@ public class SalesOrderDao {
         this.productDao = new ProductDao(ds);
     }
 
-    /** Persists header + all lines in one transaction, deducting allocated stock. Returns the new ID, or -1. */
+    /** Persists a draft header + all lines in one transaction. Returns the new ID, or -1. */
     public int save(SalesOrderModel order) {
         final String headerSql =
             "INSERT INTO tblsalesorder " +
@@ -74,15 +74,6 @@ public class SalesOrderDao {
                 ps.executeBatch();
             }
 
-            // Only a confirmed order soft-allocates stock.
-            if (SalesOrderModel.CONFIRMED.equals(order.getStatus())) {
-                for (SalesOrderLineModel line : order.getLines()) {
-                    if (line.getAllocatedQty() > 0) {
-                        productDao.reduceStock(conn, line.getProductId(), line.getAllocatedQty());
-                    }
-                }
-            }
-
             conn.commit();
             order.setId(orderId);
             return orderId;
@@ -97,6 +88,97 @@ public class SalesOrderDao {
                 try { conn.setAutoCommit(true); conn.close(); }
                 catch (SQLException ignored) {}
             }
+        }
+    }
+
+    /** Moves an order between statuses, but only if it is currently in {@code from}. */
+    public boolean updateStatus(int id, String from, String to, String holdReason) {
+        final String sql = "UPDATE tblsalesorder SET Status = ?, HoldReason = ? WHERE ID = ? AND Status = ?";
+        try (Connection c = ds.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, to);
+            ps.setString(2, holdReason);
+            ps.setInt(3, id);
+            ps.setString(4, from);
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e) {
+            System.err.println("SalesOrderDao.updateStatus: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Applies the allocation result and the next status in one transaction, deducting
+     * stock only when the order becomes Confirmed. Only orders in Pending Approval or
+     * Credit Hold can be confirmed.
+     */
+    public boolean confirm(SalesOrderModel order) {
+        final String headSql =
+            "UPDATE tblsalesorder SET Status = ?, HoldReason = ? " +
+            "WHERE ID = ? AND Status IN ('Pending Approval','Credit Hold')";
+        final String lineSql =
+            "UPDATE tblsalesorderline SET AllocatedQty = ?, BackorderQty = ? " +
+            "WHERE ID = ? AND SalesOrderID = ?";
+
+        Connection conn = null;
+        try {
+            conn = ds.getConnection();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement ps = conn.prepareStatement(headSql)) {
+                ps.setString(1, order.getStatus());
+                ps.setString(2, order.getHoldReason());
+                ps.setInt(3, order.getId());
+                if (ps.executeUpdate() != 1) throw new SQLException("Order is not pending confirmation");
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement(lineSql)) {
+                for (SalesOrderLineModel line : order.getLines()) {
+                    ps.setInt(1, line.getAllocatedQty());
+                    ps.setInt(2, line.getBackorderQty());
+                    ps.setInt(3, line.getId());
+                    ps.setInt(4, order.getId());
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+            }
+
+            if (SalesOrderModel.CONFIRMED.equals(order.getStatus())) {
+                for (SalesOrderLineModel line : order.getLines()) {
+                    if (line.getAllocatedQty() > 0
+                            && productDao.reduceStock(conn, line.getProductId(), line.getAllocatedQty()) != 1) {
+                        throw new SQLException("Stock changed for " + line.getProductCode());
+                    }
+                }
+            }
+
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ignored) {}
+            }
+            System.err.println("SalesOrderDao.confirm: " + e.getMessage());
+            return false;
+        } finally {
+            if (conn != null) {
+                try { conn.setAutoCommit(true); conn.close(); }
+                catch (SQLException ignored) {}
+            }
+        }
+    }
+
+    /** Deletes an order (lines cascade), but only while it is in {@code from}. */
+    public boolean delete(int id, String from) {
+        final String sql = "DELETE FROM tblsalesorder WHERE ID = ? AND Status = ?";
+        try (Connection c = ds.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.setString(2, from);
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e) {
+            System.err.println("SalesOrderDao.delete: " + e.getMessage());
+            return false;
         }
     }
 
@@ -190,14 +272,15 @@ public class SalesOrderDao {
         }
     }
 
-    /** Sum of open (not closed) order values already booked for a customer. */
-    public BigDecimal openOrderTotal(int customerId) {
+    /** Sum of open (not closed) order values for a customer, excluding one order (the one being checked). */
+    public BigDecimal openOrderTotal(int customerId, int excludeOrderId) {
         final String sql =
             "SELECT COALESCE(SUM(TotalAmount), 0) FROM tblsalesorder " +
-            "WHERE CustomerID = ? AND Status <> 'Closed'";
+            "WHERE CustomerID = ? AND Status <> 'Closed' AND ID <> ?";
         try (Connection c = ds.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, customerId);
+            ps.setInt(2, excludeOrderId);
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
                 return rs.getBigDecimal(1);

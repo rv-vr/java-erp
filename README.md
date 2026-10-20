@@ -13,16 +13,27 @@ HikariCP over MySQL/MariaDB.
 | Model | `bberp.model` | `EmployeeModel`, `CustomerModel`, `ProductModel`, `SalesOrderModel`, `SalesOrderLineModel` |
 | Infra | `bberp.common` | `DB` (HikariCP pool), `AppSession` |
 
+## Workflow and business rules (`SalesOrderService`)
+
+`Draft → Pending Approval → Confirmed | Credit Hold → Closed`
+
+- **Draft** — Save Order. Requires a customer, Customer PO Number, and at least
+  one line with a positive quantity. No stock is committed.
+- **Submit** — Draft → Pending Approval.
+- **Confirm** — runs the checks. Exposure = customer AR + other open orders +
+  this order, against the credit limit. Over the limit → `Credit Hold`, with no
+  stock committed. Otherwise `Confirmed`: each line is allocated against live
+  stock, the remainder is stored as `BackorderQty`, and allocated stock is
+  deducted.
+- **Override** — confirming a `Credit Hold` order approves it despite the credit
+  failure; the override is recorded in `HoldReason` as an audit note.
+- **Close** — Confirmed → Closed. Final; the order can no longer change.
+- **Delete** — allowed for Draft, Pending Approval, and Credit Hold only.
+  Confirmed and closed orders are kept for audit. Lines cascade.
+
 The 1-to-many: `tblsalesorder` → `tblsalesorderline` (cascade delete), saved in one
-transaction by `SalesOrderDao.save`.
-
-## Business rules (`SalesOrderService`)
-
-- Customer PO Number and at least one line are required.
-- Credit check: exposure = customer AR + open orders + this order, against the
-  credit limit. Over the limit → status `Credit Hold`, no stock committed.
-- Inventory check: each line is allocated against live stock; the rest is
-  stored as `BackorderQty`. Stock is deducted only when the order is `Confirmed`.
+transaction by `SalesOrderDao.save`; confirmation updates the header, all lines,
+and stock in one transaction in `SalesOrderDao.confirm`.
 
 ## Database
 
