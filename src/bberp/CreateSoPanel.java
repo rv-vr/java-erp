@@ -152,8 +152,9 @@ public class CreateSoPanel extends javax.swing.JPanel {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        sidebar = new bberp.Sidebar();
+        pnlContent = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         lblSO = new javax.swing.JLabel();
         txtSO = new javax.swing.JTextField();
@@ -188,160 +189,343 @@ public class CreateSoPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridBagLayout());
 
-        sidebar.setPreferredSize(new java.awt.Dimension(109, 480));
-        add(sidebar, new java.awt.GridBagConstraints(0, 0, 1, 8, 0.0, 1.0, java.awt.GridBagConstraints.CENTER, java.awt.GridBagConstraints.VERTICAL, new java.awt.Insets(0, 0, 0, 0), 0, 0));
+        pnlContent.setBackground(new java.awt.Color(255, 255, 255));
+        pnlContent.setLayout(new java.awt.GridBagLayout());
 
         lblTitle.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         lblTitle.setText("Create Sales Order");
-        add(lblTitle, new java.awt.GridBagConstraints(1, 0, 6, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(24, 24, 8, 24), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(24, 24, 8, 24);
+        pnlContent.add(lblTitle, gridBagConstraints);
 
         lblSO.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblSO.setText("SO Number");
-        add(lblSO, new java.awt.GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 24, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 2, 4);
+        pnlContent.add(lblSO, gridBagConstraints);
 
         txtSO.setBackground(new java.awt.Color(243, 243, 243));
         txtSO.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtSO.setPreferredSize(new java.awt.Dimension(160, 24));
         txtSO.setText("Auto-generated");
         txtSO.setEditable(false);
-        add(txtSO, new java.awt.GridBagConstraints(2, 1, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 16), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 16);
+        pnlContent.add(txtSO, gridBagConstraints);
 
         lblOrderDate.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblOrderDate.setText("Order Date");
-        add(lblOrderDate, new java.awt.GridBagConstraints(3, 1, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 8, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 2, 4);
+        pnlContent.add(lblOrderDate, gridBagConstraints);
 
         txtOrderDate.setBackground(new java.awt.Color(243, 243, 243));
         txtOrderDate.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtOrderDate.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(txtOrderDate, new java.awt.GridBagConstraints(4, 1, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 16), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 16);
+        pnlContent.add(txtOrderDate, gridBagConstraints);
 
         lblTerms.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblTerms.setText("Payment Terms");
-        add(lblTerms, new java.awt.GridBagConstraints(5, 1, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 8, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 2, 4);
+        pnlContent.add(lblTerms, gridBagConstraints);
 
         cboTerms.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cboTerms.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(cboTerms, new java.awt.GridBagConstraints(6, 1, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 24), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 24);
+        pnlContent.add(cboTerms, gridBagConstraints);
 
         lblCustomer.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblCustomer.setText("Customer");
-        add(lblCustomer, new java.awt.GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 24, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 2, 4);
+        pnlContent.add(lblCustomer, gridBagConstraints);
 
         cboCustomer.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cboCustomer.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(cboCustomer, new java.awt.GridBagConstraints(2, 2, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 16), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 16);
+        pnlContent.add(cboCustomer, gridBagConstraints);
 
         lblPO.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblPO.setText("Customer PO Number");
-        add(lblPO, new java.awt.GridBagConstraints(3, 2, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 8, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 2, 4);
+        pnlContent.add(lblPO, gridBagConstraints);
 
         txtPO.setBackground(new java.awt.Color(243, 243, 243));
         txtPO.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtPO.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(txtPO, new java.awt.GridBagConstraints(4, 2, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 16), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 16);
+        pnlContent.add(txtPO, gridBagConstraints);
 
         lblSQ.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblSQ.setText("Reference SQ Number");
-        add(lblSQ, new java.awt.GridBagConstraints(5, 2, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 8, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 2, 4);
+        pnlContent.add(lblSQ, gridBagConstraints);
 
         txtSQ.setBackground(new java.awt.Color(243, 243, 243));
         txtSQ.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtSQ.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(txtSQ, new java.awt.GridBagConstraints(6, 2, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 24), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 24);
+        pnlContent.add(txtSQ, gridBagConstraints);
 
         lblShipTo.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblShipTo.setText("Ship-To Address");
-        add(lblShipTo, new java.awt.GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 24, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 2, 4);
+        pnlContent.add(lblShipTo, gridBagConstraints);
 
         txtShipTo.setBackground(new java.awt.Color(243, 243, 243));
         txtShipTo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtShipTo.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(txtShipTo, new java.awt.GridBagConstraints(2, 3, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 16), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 16);
+        pnlContent.add(txtShipTo, gridBagConstraints);
 
         lblDelivery.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblDelivery.setText("Requested Delivery Date");
-        add(lblDelivery, new java.awt.GridBagConstraints(3, 3, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 8, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 2, 4);
+        pnlContent.add(lblDelivery, gridBagConstraints);
 
         txtDeliveryDate.setBackground(new java.awt.Color(243, 243, 243));
         txtDeliveryDate.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtDeliveryDate.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(txtDeliveryDate, new java.awt.GridBagConstraints(4, 3, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 16), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 16);
+        pnlContent.add(txtDeliveryDate, gridBagConstraints);
 
         lblInstructions.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblInstructions.setText("Delivery Instructions");
-        add(lblInstructions, new java.awt.GridBagConstraints(5, 3, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 8, 2, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 2, 4);
+        pnlContent.add(lblInstructions, gridBagConstraints);
 
         txtInstructions.setBackground(new java.awt.Color(243, 243, 243));
         txtInstructions.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtInstructions.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(txtInstructions, new java.awt.GridBagConstraints(6, 3, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 0, 6, 24), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 6, 24);
+        pnlContent.add(txtInstructions, gridBagConstraints);
 
         lblLines.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         lblLines.setText("Line Items");
-        add(lblLines, new java.awt.GridBagConstraints(1, 4, 6, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(8, 24, 4, 24), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(8, 24, 4, 24);
+        pnlContent.add(lblLines, gridBagConstraints);
 
         cboProduct.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cboProduct.setPreferredSize(new java.awt.Dimension(160, 24));
-        add(cboProduct, new java.awt.GridBagConstraints(1, 5, 2, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.HORIZONTAL, new java.awt.Insets(0, 24, 8, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 8, 4);
+        pnlContent.add(cboProduct, gridBagConstraints);
 
         spnQty.setPreferredSize(new java.awt.Dimension(60, 24));
-        add(spnQty, new java.awt.GridBagConstraints(3, 5, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 4, 8, 4), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 8, 4);
+        pnlContent.add(spnQty, gridBagConstraints);
 
         btnAddLine.setBackground(new java.awt.Color(15, 127, 75));
         btnAddLine.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnAddLine.setForeground(new java.awt.Color(255, 255, 255));
         btnAddLine.setText("+ Add Line");
         btnAddLine.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        btnAddLineActionPerformed(evt);
-                    }
-                });
-        add(btnAddLine, new java.awt.GridBagConstraints(4, 5, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 4, 8, 4), 0, 0));
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddLineActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 8, 4);
+        pnlContent.add(btnAddLine, gridBagConstraints);
 
         btnRemoveLine.setBackground(new java.awt.Color(243, 243, 243));
         btnRemoveLine.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnRemoveLine.setForeground(new java.awt.Color(0, 0, 0));
         btnRemoveLine.setText("Remove Line");
         btnRemoveLine.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        btnRemoveLineActionPerformed(evt);
-                    }
-                });
-        add(btnRemoveLine, new java.awt.GridBagConstraints(5, 5, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 4, 8, 24), 0, 0));
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveLineActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 8, 24);
+        pnlContent.add(btnRemoveLine, gridBagConstraints);
 
         tblLines.setRowHeight(22);
         tblLines.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-scrLines.setViewportView(tblLines);
-        add(scrLines, new java.awt.GridBagConstraints(1, 6, 6, 1, 1.0, 1.0, java.awt.GridBagConstraints.CENTER, java.awt.GridBagConstraints.BOTH, new java.awt.Insets(0, 24, 8, 24), 0, 0));
+        scrLines.setViewportView(tblLines);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 8, 24);
+        pnlContent.add(scrLines, gridBagConstraints);
 
         lblTotal.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         lblTotal.setText("Total: $0.00");
-        add(lblTotal, new java.awt.GridBagConstraints(1, 7, 2, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 24, 24, 0), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 24, 0);
+        pnlContent.add(lblTotal, gridBagConstraints);
 
         lblCredit.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
-        add(lblCredit, new java.awt.GridBagConstraints(3, 7, 2, 1, 0.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 4, 24, 0), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 24, 0);
+        pnlContent.add(lblCredit, gridBagConstraints);
 
         btnCancel.setBackground(new java.awt.Color(243, 243, 243));
         btnCancel.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnCancel.setForeground(new java.awt.Color(0, 0, 0));
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        btnCancelActionPerformed(evt);
-                    }
-                });
-        add(btnCancel, new java.awt.GridBagConstraints(5, 7, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.EAST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 4, 24, 12), 0, 0));
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 24, 12);
+        pnlContent.add(btnCancel, gridBagConstraints);
 
         btnSave.setBackground(new java.awt.Color(15, 127, 75));
         btnSave.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Save as Draft");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        btnSaveActionPerformed(evt);
-                    }
-                });
-        add(btnSave, new java.awt.GridBagConstraints(6, 7, 1, 1, 0.0, 0.0, java.awt.GridBagConstraints.EAST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 0, 24, 24), 0, 0));
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 24, 24);
+        pnlContent.add(btnSave, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(pnlContent, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLineActionPerformed
@@ -358,7 +542,6 @@ scrLines.setViewportView(tblLines);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private bberp.Sidebar sidebar;
     private bberp.ui.FlatButton btnAddLine;
     private bberp.ui.FlatButton btnCancel;
     private bberp.ui.FlatButton btnRemoveLine;
@@ -379,6 +562,7 @@ scrLines.setViewportView(tblLines);
     private javax.swing.JLabel lblTerms;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JPanel pnlContent;
     private javax.swing.JScrollPane scrLines;
     private javax.swing.JSpinner spnQty;
     private javax.swing.JTable tblLines;

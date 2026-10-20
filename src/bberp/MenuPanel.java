@@ -31,6 +31,7 @@ public class MenuPanel extends javax.swing.JPanel {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         sidebar = new bberp.Sidebar();
         pnlContent = new javax.swing.JPanel();
@@ -41,20 +42,35 @@ public class MenuPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridBagLayout());
-
-        sidebar.setPreferredSize(new java.awt.Dimension(109, 480));
-        add(sidebar, new java.awt.GridBagConstraints(0, 0, 1, 1, 0.0, 1.0, java.awt.GridBagConstraints.CENTER, java.awt.GridBagConstraints.VERTICAL, new java.awt.Insets(0, 0, 0, 0), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.weighty = 1.0;
+        add(sidebar, gridBagConstraints);
 
         pnlContent.setBackground(new java.awt.Color(255, 255, 255));
         pnlContent.setLayout(new java.awt.GridBagLayout());
 
         lblTitle.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         lblTitle.setText("Main Menu");
-        pnlContent.add(lblTitle, new java.awt.GridBagConstraints(0, 0, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 0, 4, 0), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 0);
+        pnlContent.add(lblTitle, gridBagConstraints);
 
         lblSignedIn.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         lblSignedIn.setText("Signed in as guest");
-        pnlContent.add(lblSignedIn, new java.awt.GridBagConstraints(0, 1, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 0, 16, 0), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 16, 0);
+        pnlContent.add(lblSignedIn, gridBagConstraints);
 
         btnSalesOrders.setBackground(new java.awt.Color(15, 127, 75));
         btnSalesOrders.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
@@ -66,11 +82,16 @@ public class MenuPanel extends javax.swing.JPanel {
                 btnSalesOrdersActionPerformed(evt);
             }
         });
-        pnlContent.add(btnSalesOrders, new java.awt.GridBagConstraints(0, 2, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 0, 8, 0), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 0);
+        pnlContent.add(btnSalesOrders, gridBagConstraints);
 
         btnLogout.setBackground(new java.awt.Color(243, 243, 243));
         btnLogout.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnLogout.setForeground(new java.awt.Color(0, 0, 0));
         btnLogout.setPreferredSize(new java.awt.Dimension(200, 32));
         btnLogout.setText("Log out");
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
@@ -78,9 +99,20 @@ public class MenuPanel extends javax.swing.JPanel {
                 btnLogoutActionPerformed(evt);
             }
         });
-        pnlContent.add(btnLogout, new java.awt.GridBagConstraints(0, 3, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.WEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(0, 0, 0, 0), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        pnlContent.add(btnLogout, gridBagConstraints);
 
-        add(pnlContent, new java.awt.GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, java.awt.GridBagConstraints.NORTHWEST, java.awt.GridBagConstraints.NONE, new java.awt.Insets(24, 24, 24, 24), 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(24, 24, 24, 24);
+        add(pnlContent, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalesOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalesOrdersActionPerformed
