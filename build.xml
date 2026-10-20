@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="java-erp" default="run" basedir=".">
+    <description>Builds, runs, and cleans the java-erp project.</description>
+
+    <property file="nbproject/project.properties"/>
+
+    <target name="compile">
+        <mkdir dir="${build.classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.classes.dir}" includeantruntime="false"
+               source="${javac.source}" target="${javac.target}" debug="${javac.debug}">
+            <classpath>
+                <fileset dir="lib" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.jar}" basedir="${build.classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Class-Path" value="../lib/HikariCP-7.0.2.jar ../lib/mysql-connector-j-8.0.33.jar ../lib/slf4j-api-1.7.36.jar ../lib/slf4j-nop-1.7.36.jar"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true" classpath="${run.classpath}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+</project>
