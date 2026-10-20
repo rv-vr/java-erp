@@ -3,13 +3,25 @@ package bberp;
 import javax.swing.*;
 import java.awt.*;
 
-class Sidebar extends JPanel {
-    private final boolean centered;
+public class Sidebar extends JPanel {
+    private boolean centered;
 
-    Sidebar(boolean centered, int height) {
+    /** Required by the NetBeans GUI Builder. */
+    public Sidebar() {
+        this(false, 480);
+    }
+
+    public Sidebar(boolean centered, int height) {
         this.centered = centered;
         setBackground(App.BROWN);
         setPreferredSize(new Dimension(109, height));
+    }
+
+    public boolean isCentered() { return centered; }
+
+    public void setCentered(boolean centered) {
+        this.centered = centered;
+        repaint();
     }
 
     @Override

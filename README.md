@@ -13,6 +13,10 @@ HikariCP over MySQL/MariaDB.
 | Model | `bberp.model` | `EmployeeModel`, `CustomerModel`, `ProductModel`, `SalesOrderModel`, `SalesOrderLineModel` |
 | Infra | `bberp.common` | `DB` (HikariCP pool), `AppSession` |
 
+The four screens are NetBeans form pairs (`XPanel.java` + `XPanel.form`) laid out
+with `GridBagLayout`, so they open in the GUI Builder's Design view. Non-generated
+wiring lives in `connect(App, HikariDataSource)` and outside the `GEN` blocks.
+
 ## Workflow and business rules (`SalesOrderService`)
 
 `Draft → Pending Approval → Confirmed | Credit Hold → Closed`
